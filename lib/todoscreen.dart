@@ -1,7 +1,8 @@
 import 'dart:html';
 
+import '../taskscreen.dart';
 import 'package:flutter/material.dart';
-import './todo.dart';
+import './models/todo.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 
@@ -37,6 +38,13 @@ class TodoList extends StatelessWidget {
           ),
           onTap: () {
             //bam vao item bat ky trong list view thi nhay ra detail id
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => TaskScreen(
+                        todoid: todos[index].id,
+                      )),
+            );
           },
         );
       },

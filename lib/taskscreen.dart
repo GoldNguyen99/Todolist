@@ -1,7 +1,6 @@
 import 'dart:html';
 
 import 'package:flutter/material.dart';
-import './todo.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 
@@ -24,10 +23,13 @@ class _TaskScreenState extends State<TaskScreen> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () {},
+            onPressed: () {
+              //bam vao them 1 task moi
+            },
           )
         ],
       ),
+      body: Text("LIST TASK HERE!!"),
     );
   }
 }
