@@ -37,7 +37,21 @@ class Task {
     );
   }
 }
-//controller = "functions relating to Task"
-// Future<List<Task>> fetchTask(http){
 
-// }
+//controller = "functions relating to Task"
+Future<List<Task>> fetchTask(http.Client client, int todoId) async {
+  final response = await client.get(Uri.parse('$URL_TASK_BY_TODOID$todoId'));
+  if (response.statusCode == 200) {
+    Map<String, dynamic> mapResponse = json.decode(response.body);
+    if (mapResponse['result'] == "OK") {
+      final task = mapResponse["data"].cast<Map<String, dynamic>>();
+      return task.map<Task>((json) {
+        return Task.fromJson(json);
+      }).toList();
+    } else {
+      return [];
+    }
+  } else {
+    throw Exception('Failed to load Task');
+  }
+}
