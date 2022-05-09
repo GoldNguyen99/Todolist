@@ -6,16 +6,16 @@ import '../global.dart';
 // import 'package:query_params/query_params.dart';
 
 class Task {
-  int id;
-  String name;
-  bool finished;
-  int todoId;
+  int? id;
+  String? name;
+  bool? finished;
+  int? todoId;
 
   Task({
-    required this.id,
-    required this.name,
-    required this.finished,
-    required this.todoId,
+    this.id,
+    this.name,
+    this.finished,
+    this.todoId,
   });
   factory Task.fromJson(Map<String, dynamic> json) {
     Task newTask = Task(
@@ -53,5 +53,24 @@ Future<List<Task>> fetchTask(http.Client client, int todoId) async {
     }
   } else {
     throw Exception('Failed to load Task');
+  }
+}
+
+//fetch task by id: lay ra noi dung cua task tuoq ung id dau vao
+Future<Task> fetchTaskById(http.Client client, int id) async {
+  final String url = '$URL_TASKS/$id';
+  // print('url = $url');
+
+  final respone = await client.get(Uri.parse(url));
+  if (respone.statusCode == 200) {
+    Map<String, dynamic> mapResponse = json.decode(respone.body);
+    if (mapResponse["result"] == "ok") {
+      Map<String, dynamic> mapTask = mapResponse["data"];
+      return Task.fromJson(mapTask);
+    } else {
+      return Task();
+    }
+  } else {
+    throw Exception('Failed to get detail task with Id = {id}');
   }
 }

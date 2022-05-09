@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'models/task.dart';
+import 'detailTaskScreen.dart';
 
 class TaskScreen extends StatefulWidget {
   final int todoid;
@@ -61,7 +62,7 @@ class TaskList extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  this.tasks[index].name,
+                  this.tasks[index].name as String,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
                 ),
                 new Text(
@@ -71,6 +72,15 @@ class TaskList extends StatelessWidget {
               ],
             ),
           ),
+          onTap: () {
+            int selectedId = tasks[index].id as int;
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => new detailTaskScreen(),
+              ),
+            );
+          },
         );
       },
       itemCount: this.tasks.length,
