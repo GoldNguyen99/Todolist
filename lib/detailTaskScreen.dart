@@ -92,7 +92,23 @@ class _DetailTaskState extends State<Detailtask> {
       child: Text("Save"),
       color: Theme.of(context).accentColor,
       elevation: 4.0,
-      onPressed: () {},
+      onPressed: () async {
+        Map<String, dynamic> params = Map<String, dynamic>();
+        params["id"] = this.task.id.toString();
+        params["name"] = this.task.name;
+        params["isfinished"] = this.task.finished != null ? "1" : "0";
+        params["todoid"] = this.task.todoId.toString();
+        await updateTask(http.Client(), params);
+        Navigator.pop(context); //quay lai man hinh truoc do de xem cap nhat
+      },
+    );
+    final _btndelete = RaisedButton(
+      child: Text("delete"),
+      color: Colors.redAccent,
+      elevation: 4.0,
+      onPressed: () {
+        
+      },
     );
     final _column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
