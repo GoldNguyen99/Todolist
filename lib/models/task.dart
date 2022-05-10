@@ -87,3 +87,15 @@ Future<Task> updateTask(http.Client client, Map<String, dynamic> params) async {
     //tra ve object
   }
 }
+
+//delete task
+Future<Task> deleteTask(http.Client client, int id) async {
+  final String url = '$URL_TASKS/$id';
+  final response = await client.delete(Uri.parse(url));
+  if (response.statusCode == 200) {
+    final responseBody = await json.decode(response.body);
+    return Task.fromJson(responseBody);
+  } else {
+    throw Exception('Failed to delete a Task');
+  }
+}
