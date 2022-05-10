@@ -106,8 +106,39 @@ class _DetailTaskState extends State<Detailtask> {
       child: Text("delete"),
       color: Colors.redAccent,
       elevation: 4.0,
-      onPressed: () {
-        
+      onPressed: () async {
+        // await deleteTask(http.Client(), this.task.id as int);
+        // Navigator.pop(context);
+        showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Confirmation"),
+              content: SingleChildScrollView(
+                child: ListBody(children: <Widget>[
+                  Text("Are you sure you want to delete"),
+                ]),
+              ),
+              actions: <Widget>[
+                new FlatButton(
+                  child: new Text('Yes'),
+                  onPressed: () async {
+                    await deleteTask(http.Client(), this.task.id as int);
+                    // await Navigator.pop(context); //quit dialog
+                    Navigator.pop(context); //quit to previous screen
+                  },
+                ),
+                new FlatButton(
+                  child: new Text('No'),
+                  onPressed: () async {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            );
+          },
+        );
       },
     );
     final _column = Column(
@@ -128,6 +159,7 @@ class _DetailTaskState extends State<Detailtask> {
         Row(
           children: <Widget>[
             Expanded(child: _btnSave),
+            Expanded(child: _btndelete),
           ],
         ),
       ],
