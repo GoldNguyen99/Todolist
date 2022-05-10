@@ -74,3 +74,16 @@ Future<Task> fetchTaskById(http.Client client, int id) async {
     throw Exception('Failed to get detail task with Id = {id}');
   }
 }
+
+//update task
+Future<Task> updateTask(http.Client client, Map<String, dynamic> params) async {
+  final response =
+      await client.put(Uri.parse('$URL_TASKS/${params["id"]}'), body: params);
+  if (response.statusCode == 200) {
+    final responseBody = await json.decode(response.body);
+    return Task.fromJson(responseBody);
+  } else {
+    throw Exception('Failed to update a Task. Error: ${response.toString()}');
+    //tra ve object
+  }
+}
